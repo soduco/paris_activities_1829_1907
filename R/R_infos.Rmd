@@ -1,5 +1,4 @@
 ### R info of packages in files
-#### Extracting data
 ```{r, include=FALSE}
 hooks = knitr::knit_hooks$get()
 hook_foldable = function(type) {
@@ -22,6 +21,21 @@ knitr::knit_hooks$set(
 )
 ```
 
+#### R global session
+```{r}
+infos <- devtools::session_info()
+infos
+```
+
+#### R packages
+```{r}
+infos[2]$packages$package |>
+  purrr::map(citation) |>
+  print(style = "text")
+```
+
+
+#### Extracting data
 ```{r}
 NCmisc::list.functions.in.file(filename = "1_extracting_specific_dates_listeNoms.R")
 ```
