@@ -354,8 +354,12 @@ display: none;
 
 <div id="r-info-of-packages-in-files" class="section level3">
 <h3>R info of packages in files</h3>
-<div id="r-global-session" class="section level4">
-<h4>R global session</h4>
+<div id="extracting-data" class="section level4">
+<h4>Extracting data</h4>
+</div>
+</div>
+<div id="r-global-session" class="section level3">
+<h3>R global session</h3>
 <pre class="r"><code>infos &lt;- devtools::session_info()
 infos</code></pre>
 <details>
@@ -431,8 +435,8 @@ output
 ## ──────────────────────────────────────────────────────────────────────────────</code></pre>
 </details>
 </div>
-<div id="r-packages" class="section level4">
-<h4>R packages</h4>
+<div id="r-packages" class="section level3">
+<h3>R packages</h3>
 <pre class="r"><code>infos[2]$packages$package |&gt;
   purrr::map(citation) |&gt;
   print(style = &quot;text&quot;)</code></pre>
@@ -697,8 +701,7 @@ output
 ## Export Tables to LaTeX or HTML_. R package version 1.8-4,
 ## &lt;https://CRAN.R-project.org/package=xtable&gt;.</code></pre>
 </details>
-</div>
-<div id="extracting-data" class="section level4">
+<div id="extracting-data-1" class="section level4">
 <h4>Extracting data</h4>
 <pre class="r"><code>NCmisc::list.functions.in.file(filename = &quot;1_extracting_specific_dates_listeNoms.R&quot;)</code></pre>
 <details>
