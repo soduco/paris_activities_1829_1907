@@ -1,0 +1,175 @@
+freq_max,size,rank,NAICS,manual_identification_review
+(abr. de chaussures,2471,112,Manufacturing,yes
+administrateur judiciaire,1711,148,Administrative and Legal Services,yes
+affaires agent d,2682,101,Administrative and Legal Services,yes
+agence de publicite,1364,174,,yes
+agent de change,4696,63,Finance and Insurance,yes
+ancien notaire,9030,27,"No Activity, Living of Income",yes
+appartements meubles,2749,100,,yes
+appel avocat cour d,2487,111,Administrative and Legal Services,yes
+architecte,15371,8,Engineering Services,yes
+artiste-peintre,6749,50,"Arts, Entertainment, and Recreation",yes
+avocat,15836,7,Administrative and Legal Services,yes
+bains,1385,171,,yes
+banquiers,3658,78,Finance and Insurance,yes
+beurre et oeufs,2853,96,Food stores,yes
+bijoutier en or,13199,14,Clothing and clothing accessories manufacturers/retailers,yes
+bois et charbons,4006,68,Home Furniture and Supplies Manufacturers/Retailers,yes
+bonnetier,3191,91,Clothing and clothing accessories manufacturers/retailers,yes
+bottier,5042,60,Clothing and clothing accessories manufacturers/retailers,yes
+boucher,14903,9,Food stores,yes
+boulanger,14827,10,Food stores,yes
+boutanger,7282,43,Food stores,yes
+brocanteur,1888,137.5,Other retailers,yes
+broderies,3082,92,Clothing and clothing accessories manufacturers/retailers,yes
+bronzes,1657,152,"Arts, Entertainment, and Recreation",yes
+brossier,3513,83,Home Furniture and Supplies Manufacturers/Retailers,yes
+cabinet de lecture,1580,157,,yes
+cafe du commerce,1773,143,Full-Service Restaurants,yes
+cafe-restaurant,1514,161,Full-Service Restaurants,yes
+cafes,1656,153,Full-Service Restaurants,yes
+cbeniste,2008,131,Home Furniture and Supplies Manufacturers/Retailers,yes
+chapelier,3590,81,Clothing and clothing accessories manufacturers/retailers,yes
+charbonnier et vins,11012,17,Home Furniture and Supplies Manufacturers/Retailers,yes
+charcutier,14438,11,Food stores,yes
+chaudronnier,2870,95,Home Furniture and Supplies Manufacturers/Retailers,yes
+chaussures,8832,31,Clothing and clothing accessories manufacturers/retailers,yes
+chef d'institution,1625,155,,yes
+chef de bat.,3271,88,,yes
+chemisier,5638,53,Clothing and clothing accessories manufacturers/retailers,yes
+chirurgien-dentiste,1679,150,Health Practitioners,yes
+ciseleur,1458,166,Manufacturing,yes
+coiffeur,11153,16,"Cosmetics, Beauty Supplies, and Perfume Retailers",yes
+colffeur,1776,142,"Cosmetics, Beauty Supplies, and Perfume Retailers",yes
+comestibles,8381,34,Food stores,yes
+commissionnaire,10858,20,Trade Agents and Brokers,yes
+confiseur,5395,55,Food stores,yes
+conseiller referendaire a la cour des comptes,3745,76.5,Public Administration,yes
+conturiere,2534,109,Clothing and clothing accessories manufacturers/retailers,yes
+cordonnier,8444,33,Clothing and clothing accessories manufacturers/retailers,yes
+corroyeur,1972,134,Manufacturing,yes
+couleurs,2607,104,"Arts, Entertainment, and Recreation",yes
+courtier en vins,3555,82,,yes
+coutelier,1767,144,Manufacturing,yes
+couteurs et vernis,1986,133,Wholesalers Trade,yes
+couturiere,6331,52,Clothing and clothing accessories manufacturers/retailers,yes
+cpicier,1706,149,Food stores,yes
+cpicter,2783,98,Food stores,yes
+cremicr,1372,172,,yes
+cremier,5079,58,,yes
+dentelles,1494,163,Clothing and clothing accessories manufacturers/retailers,yes
+dentiste,3316,84,Health Practitioners,yes
+depute du nord,3600,79,Public Administration,yes
+dessinateur,3834,73,Engineering Services,yes
+directrice de la salle d'asile,9076,26,,yes
+distillateur,2595,105,Food stores,yes
+docteur-medecin,1496,162,Health Practitioners,yes
+doreur sur bois,4025,67,Manufacturing,yes
+ebeniste,9250,23,Home Furniture and Supplies Manufacturers/Retailers,yes
+emballeur,2130,129,Trade Agents and Brokers,yes
+entrepreneur de maconnerie,8357,35,Construction and Public Works,yes
+epicier,32524,3,Food stores,yes
+epicter,5048,59,Food stores,yes
+estampes,1913,136,Publishing Industries,yes
+fab. de corsets,9005,28,Manufacturing,yes
+fab. de dentelles,1365,173,Manufacturing,no
+fab. de fleurs,10272,21,Manufacturing,no
+fab. de necessaires,2141,128,Manufacturing,no
+fabr. cartonnages,2763,99,Manufacturing,no
+fabr. de chaussures,41232,2,Manufacturing,no
+facteur de pianos,1998,132,Manufacturing,yes
+ferblantier,3071,93,Manufacturing,yes
+fleuriste,5040,61,Other retailers,yes
+fondeur en cuivre,2613,103,Manufacturing,yes
+fournitures pour modes,2202,123,Wholesalers Trade,yes
+fromages en gros,1828,141,Food stores,yes
+fruitier,2799,97,Food stores,yes
+grainetier,4038,66,Food stores,yes
+grains et fourrages,1888,137.5,Related to Agricultural Activities,yes
+graveur sur metaux,8324,37,Manufacturing,yes
+h. de lettres,8258,38,"Arts, Entertainment, and Recreation",yes
+h. garni,1835,140,Building and Car Rental,yes
+herboriste,4004,69,Health Practitioners,yes
+homme de lettres,2294,118,"Arts, Entertainment, and Recreation",yes
+horloger,8192,39,Home Furniture and Supplies Manufacturers/Retailers,yes
+hortoger,4467,64,Home Furniture and Supplies Manufacturers/Retailers,yes
+hotel garni,1486,164,Building and Car Rental,yes
+hotel meuble,1406,168,Building and Car Rental,yes
+huissier,1674,151,Administrative and Legal Services,yes
+imprimeur-lithographe,7099,46,Publishing Industries,yes
+ingenieur,10935,18,Engineering Services,yes
+inspecteur des finances,3598,80,Public Administration,yes
+institution,6768,49,Educational Services,yes
+layetier,2509,110,Manufacturing,yes
+libraire,6930,47,Publishing Industries,yes
+limonadier,9192,24,Food stores,yes
+lingerie,7246,44,Home Furniture and Supplies Manufacturers/Retailers,yes
+liquoriste,2570,106,Food stores,yes
+loueur de voitures,1479,165,Building and Car Rental,yes
+macon,4312,65,Construction and Public Works,yes
+maison meublee,2192,124,Building and Car Rental,yes
+marbrier,3244,89,Manufacturing,yes
+march. de meubles,3231,90,Other retailers,yes
+marechal-ferrant,1533,160,,yes
+maroquinerie,2235,120,Manufacturing,yes
+mecanicien,6678,51,Engineering Services,yes
+medecin,23702,6,Health Practitioners,yes
+medectn,2345,116,Health Practitioners,yes
+menuisier,8946,29,Home Furniture and Supplies Manufacturers/Retailers,yes
+menuister,2557,107,Home Furniture and Supplies Manufacturers/Retailers,yes
+mercerie,13069,15,Clothing and clothing accessories manufacturers/retailers,yes
+meubles,3930,70,Home Furniture and Supplies Manufacturers/Retailers,yes
+miroitier,1394,170,Home Furniture and Supplies Manufacturers/Retailers,yes
+modes,8914,30,Clothing and clothing accessories manufacturers/retailers,yes
+negociant,3304,85.5,Wholesalers Trade,yes
+negts,1745,145,Wholesalers Trade,yes
+notaire,1593,156,Administrative and Legal Services,yes
+nourrisseur,1417,167,Related to Agricultural Activities,yes
+nouveautes,3806,75,Other retailers,yes
+opticien,2218,121,Manufacturing,yes
+orfevre,1737,146,Clothing and clothing accessories manufacturers/retailers,yes
+papetier,7500,42,Publishing Industries,yes
+papiers peints,2068,130,Publishing Industries,"yes, change of NAICS (initially Wholesalers Trade) to simplify the manual editing"
+parapluies,2251,119,Clothing and clothing accessories manufacturers/retailers,yes
+paraptutes,2358,115,Clothing and clothing accessories manufacturers/retailers,yes
+parfumeur,2547,108,"Cosmetics, Beauty Supplies, and Perfume Retailers",yes
+passementier,3809,74,Clothing and clothing accessories manufacturers/retailers,yes
+patissier,6844,48,Food stores,yes
+peintre-artiste,27238,4,"Arts, Entertainment, and Recreation",yes
+pensionnat,2642,102,Educational Services,yes
+pharmacien,9077,25,Health Practitioners,yes
+plombier,2876,94,Construction and Public Works,yes
+plumassier,2416,113,Other retailers,yes
+porcelaines et cristaux,1548,158,Home Furniture and Supplies Manufacturers/Retailers,yes
+porcetaines et cristaux,1654,154,Home Furniture and Supplies Manufacturers/Retailers,yes
+produits chimiques,1537,159,,yes
+professeur de piano,10926,19,Educational Services,yes
+prop.,3852,72,"No Activity, Living of Income",yes
+proprietaire,25582,5,"No Activity, Living of Income",yes
+quincaillier,3898,71,Other retailers,yes
+receveur de rentes,1874,139,Finance and Insurance,yes
+relieur,2168,126,Publishing Industries,yes
+rentier,8325,36,"No Activity, Living of Income",yes
+representant de commerce,8169,40,Trade Agents and Brokers,yes
+restaurateur,7219,45,Full-Service Restaurants,yes
+robes,1730,147,Clothing and clothing accessories manufacturers/retailers,yes
+robes et manteaux,1399,169,Clothing and clothing accessories manufacturers/retailers,yes
+sage-femme,5096,57,Health Practitioners,yes
+sculpteur-statuaire,5284,56,,yes
+secretaire d'ambassade,2181,125,Administrative and Legal Services,yes
+serrurier,10141,22,Construction and Public Works,yes
+tabac,3301,87,Other retailers,yes
+tabac et vins,3304,85.5,Other retailers,yes
+tabletier,2157,127,Manufacturing,yes
+tailleur,14293,13,Clothing and clothing accessories manufacturers/retailers,yes
+tailleurs,2331,117,Clothing and clothing accessories manufacturers/retailers,yes
+tapissier,5496,54,Home Furniture and Supplies Manufacturers/Retailers,yes
+teinturier-degraisseur,7541,41,Manufacturing,yes
+tonnelier,2394,114,Manufacturing,yes
+tourneur en bois,4762,62,Manufacturing,yes
+traiteur,2206,122,Full-Service Restaurants,yes
+uins,3745,76.5,Food stores,yes
+vins,63979,1,Food stores,yes
+vins en gros,8779,32,Wholesalers Trade,yes
+vins-restaurant,1920,135,Food stores,"yes, change of NAICS (initially Full-Service Restaurants) to simplify the manual editing"
+vins-traiteur,14390,12,Food stores,"yes, change of NAICS (initially Full-Service Restaurants) to simplify the manual editing"

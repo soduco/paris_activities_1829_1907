@@ -1,0 +1,16 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+data/pop_paris_long_1831_1906.csv
+data/studied_data_2.rds
+data/studied_data_3.rds
+*.gpkg
+data/data_extraction_with_population.xlsx
+data/intermediary_datasets/data_extraction.rds
+*.Rproj
+R/2_data_creation.R
+README.md
+data/intermediary_datasets/studied_data_2.rds
+Dockerfile
