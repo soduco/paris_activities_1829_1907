@@ -11,6 +11,5 @@ data/data_extraction_with_population.xlsx
 data/intermediary_datasets/data_extraction.rds
 *.Rproj
 R/2_data_creation.R
-README.md
 data/intermediary_datasets/studied_data_2.rds
 Dockerfile
