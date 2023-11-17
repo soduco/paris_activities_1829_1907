@@ -354,12 +354,8 @@ display: none;
 
 <div id="r-info-of-packages-in-files" class="section level3">
 <h3>R info of packages in files</h3>
-<div id="extracting-data" class="section level4">
-<h4>Extracting data</h4>
-</div>
-</div>
-<div id="r-global-session" class="section level3">
-<h3>R global session</h3>
+<div id="r-global-session" class="section level4">
+<h4>R global session</h4>
 <pre class="r"><code>infos &lt;- devtools::session_info()
 infos</code></pre>
 <details>
@@ -376,7 +372,7 @@ output
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Europe/Paris
-##  date     2023-11-15
+##  date     2023-11-17
 ##  pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
 ## 
 ## ─ Packages ───────────────────────────────────────────────────────────────────
@@ -435,8 +431,8 @@ output
 ## ──────────────────────────────────────────────────────────────────────────────</code></pre>
 </details>
 </div>
-<div id="r-packages" class="section level3">
-<h3>R packages</h3>
+<div id="r-packages" class="section level4">
+<h4>R packages</h4>
 <pre class="r"><code>infos[2]$packages$package |&gt;
   purrr::map(citation) |&gt;
   print(style = &quot;text&quot;)</code></pre>
@@ -701,7 +697,8 @@ output
 ## Export Tables to LaTeX or HTML_. R package version 1.8-4,
 ## &lt;https://CRAN.R-project.org/package=xtable&gt;.</code></pre>
 </details>
-<div id="extracting-data-1" class="section level4">
+</div>
+<div id="extracting-data" class="section level4">
 <h4>Extracting data</h4>
 <pre class="r"><code>NCmisc::list.functions.in.file(filename = &quot;1_extracting_specific_dates_listeNoms.R&quot;)</code></pre>
 <details>
@@ -779,48 +776,62 @@ output
 output
 </summary>
 <pre><code>## $`character(0)`
-##  [1] &quot;aes&quot;                        &quot;after_stat&quot;                
-##  [3] &quot;arrange&quot;                    &quot;as_tibble&quot;                 
-##  [5] &quot;case_when&quot;                  &quot;coord_polar&quot;               
-##  [7] &quot;element_blank&quot;              &quot;element_text&quot;              
-##  [9] &quot;expand_limits&quot;              &quot;f_pente&quot;                   
-## [11] &quot;f_slope_in_naics&quot;           &quot;f_slope_naics&quot;             
-## [13] &quot;f_slope_naics_periodchoice&quot; &quot;facet_wrap&quot;                
-## [15] &quot;frankv&quot;                     &quot;geom_abline&quot;               
-## [17] &quot;geom_line&quot;                  &quot;geom_point&quot;                
-## [19] &quot;geom_pointrange&quot;            &quot;geom_text_repel&quot;           
-## [21] &quot;ggplot&quot;                     &quot;ggsave&quot;                    
-## [23] &quot;ggtitle&quot;                    &quot;group_by&quot;                  
-## [25] &quot;group_split&quot;                &quot;guide_legend&quot;              
-## [27] &quot;guides&quot;                     &quot;if_else&quot;                   
-## [29] &quot;ineq&quot;                       &quot;label_math&quot;                
-## [31] &quot;labs&quot;                       &quot;left_join&quot;                 
-## [33] &quot;margin&quot;                     &quot;mutate&quot;                    
-## [35] &quot;n&quot;                          &quot;plot_layout&quot;               
-## [37] &quot;rbindlist&quot;                  &quot;read_excel&quot;                
-## [39] &quot;reframe&quot;                    &quot;rename&quot;                    
-## [41] &quot;row_number&quot;                 &quot;scale_color_colorblind&quot;    
-## [43] &quot;scale_color_tableau&quot;        &quot;scale_color_viridis_c&quot;     
-## [45] &quot;scale_x_continuous&quot;         &quot;scale_x_log10&quot;             
-## [47] &quot;scale_y_continuous&quot;         &quot;scale_y_log10&quot;             
-## [49] &quot;select&quot;                     &quot;st_drop_geometry&quot;          
-## [51] &quot;st_is_empty&quot;                &quot;st_read&quot;                   
-## [53] &quot;stat_lorenz&quot;                &quot;stat_poly_eq&quot;              
-## [55] &quot;stat_poly_line&quot;             &quot;str_detect&quot;                
-## [57] &quot;str_remove_all&quot;             &quot;str_sub&quot;                   
-## [59] &quot;summarise&quot;                  &quot;TeX&quot;                       
-## [61] &quot;theme&quot;                      &quot;theme_bw&quot;                  
-## [63] &quot;ungroup&quot;                    &quot;unit&quot;                      
-## [65] &quot;ylab&quot;                      
+##  [1] &quot;add_osm_feature&quot;            &quot;aes&quot;                       
+##  [3] &quot;after_stat&quot;                 &quot;arrange&quot;                   
+##  [5] &quot;as_tibble&quot;                  &quot;bind_cols&quot;                 
+##  [7] &quot;case_when&quot;                  &quot;coord_polar&quot;               
+##  [9] &quot;count&quot;                      &quot;dark_theme_linedraw&quot;       
+## [11] &quot;element_blank&quot;              &quot;element_text&quot;              
+## [13] &quot;expand_limits&quot;              &quot;f_pente&quot;                   
+## [15] &quot;f_slope_in_naics&quot;           &quot;f_slope_naics&quot;             
+## [17] &quot;f_slope_naics_periodchoice&quot; &quot;facet_wrap&quot;                
+## [19] &quot;frankv&quot;                     &quot;geom_abline&quot;               
+## [21] &quot;geom_bar&quot;                   &quot;geom_density_2d_filled&quot;    
+## [23] &quot;geom_line&quot;                  &quot;geom_point&quot;                
+## [25] &quot;geom_pointrange&quot;            &quot;geom_sf&quot;                   
+## [27] &quot;geom_text_repel&quot;            &quot;geom_tile&quot;                 
+## [29] &quot;getbb&quot;                      &quot;ggplot&quot;                    
+## [31] &quot;ggsave&quot;                     &quot;ggtitle&quot;                   
+## [33] &quot;group_by&quot;                   &quot;group_split&quot;               
+## [35] &quot;guide_legend&quot;               &quot;guides&quot;                    
+## [37] &quot;if_else&quot;                    &quot;ineq&quot;                      
+## [39] &quot;kde2d&quot;                      &quot;label_math&quot;                
+## [41] &quot;labs&quot;                       &quot;left_join&quot;                 
+## [43] &quot;margin&quot;                     &quot;melt&quot;                      
+## [45] &quot;mutate&quot;                     &quot;muted&quot;                     
+## [47] &quot;n&quot;                          &quot;opq&quot;                       
+## [49] &quot;osmdata_sf&quot;                 &quot;plot_layout&quot;               
+## [51] &quot;rbindlist&quot;                  &quot;read_excel&quot;                
+## [53] &quot;reframe&quot;                    &quot;rename&quot;                    
+## [55] &quot;row_number&quot;                 &quot;scale_color_colorblind&quot;    
+## [57] &quot;scale_color_tableau&quot;        &quot;scale_color_viridis_c&quot;     
+## [59] &quot;scale_colour_gradient2&quot;     &quot;scale_fill_gradient2&quot;      
+## [61] &quot;scale_x_continuous&quot;         &quot;scale_x_log10&quot;             
+## [63] &quot;scale_y_continuous&quot;         &quot;scale_y_log10&quot;             
+## [65] &quot;select&quot;                     &quot;st_as_sf&quot;                  
+## [67] &quot;st_as_sfc&quot;                  &quot;st_bbox&quot;                   
+## [69] &quot;st_buffer&quot;                  &quot;st_cast&quot;                   
+## [71] &quot;st_drop_geometry&quot;           &quot;st_filter&quot;                 
+## [73] &quot;st_geometry&quot;                &quot;st_is_empty&quot;               
+## [75] &quot;st_read&quot;                    &quot;st_transform&quot;              
+## [77] &quot;st_union&quot;                   &quot;stat_contour&quot;              
+## [79] &quot;stat_lorenz&quot;                &quot;stat_poly_eq&quot;              
+## [81] &quot;stat_poly_line&quot;             &quot;str_detect&quot;                
+## [83] &quot;str_remove_all&quot;             &quot;str_sub&quot;                   
+## [85] &quot;summarise&quot;                  &quot;TeX&quot;                       
+## [87] &quot;theme&quot;                      &quot;theme_bw&quot;                  
+## [89] &quot;ungroup&quot;                    &quot;unit&quot;                      
+## [91] &quot;ylab&quot;                      
 ## 
 ## $`package:base`
-##  [1] &quot;abs&quot;        &quot;as.numeric&quot; &quot;c&quot;          &quot;is.na&quot;      &quot;lapply&quot;    
-##  [6] &quot;library&quot;    &quot;max&quot;        &quot;mean&quot;       &quot;min&quot;        &quot;paste&quot;     
-## [11] &quot;paste0&quot;     &quot;rm&quot;         &quot;round&quot;      &quot;seq&quot;        &quot;source&quot;    
-## [16] &quot;sqrt&quot;       &quot;sum&quot;        &quot;unique&quot;    
+##  [1] &quot;abs&quot;        &quot;as.numeric&quot; &quot;c&quot;          &quot;colnames&quot;   &quot;do.call&quot;   
+##  [6] &quot;identical&quot;  &quot;is.na&quot;      &quot;lapply&quot;     &quot;library&quot;    &quot;max&quot;       
+## [11] &quot;mean&quot;       &quot;min&quot;        &quot;names&quot;      &quot;paste&quot;      &quot;paste0&quot;    
+## [16] &quot;range&quot;      &quot;rm&quot;         &quot;round&quot;      &quot;rownames&quot;   &quot;seq&quot;       
+## [21] &quot;source&quot;     &quot;sqrt&quot;       &quot;sum&quot;        &quot;unique&quot;    
 ## 
 ## $`package:stats`
-## [1] &quot;filter&quot;  &quot;reorder&quot; &quot;sd&quot;     
+## [1] &quot;filter&quot;   &quot;reorder&quot;  &quot;sd&quot;       &quot;setNames&quot;
 ## 
 ## $`package:utils`
 ## [1] &quot;read.csv&quot;  &quot;write.csv&quot;</code></pre>

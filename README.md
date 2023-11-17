@@ -12,9 +12,17 @@ The "data_extraction_with_population.gpkg" is the final data-set used for analys
 
 **Note:** "directories-ListNoms.gpkg" data-set (version 3) was created in SoDUCo ANR Project and is open on Nakala platform [doi: 10.34847/nkl.98eem49t.v3](https://doi.org/10.34847/nkl.98eem49t). See documentation and presentations in .pdf format on Nakala platform for precise information and licence to know how to use the data. The initial data (4.9 Go) must be downloaded and included in _data/init_datasets_ folder to exactly replicate the _R/1_extracting_specific_dates_listeNoms.R_ code. The data for the years extracted from the initial global data-set and studied here are, however, directly included in the _data/intermediary_datasets/studied_data_2.rds_ file.
 
-### Population data
+### Population
 
 Population data (named in _data/init_datasets_ "pop_apres_1860.xlsx" and "pop_avt_1860.xlsx") were created in SoDUCo ANR Project and are open on Nakala platform [doi: 10.34847/nkl.e173c93p](https://doi.org/10.34847/nkl.e173c93p). See documentation in .pdf format on Nakala platform for precise information and licence to know how to use the data.
+
+### Administrative delineations of Paris
+
+Two data-sets compose the delineations of Paris' districts:
+
+- 1790-1860: A.-L. Bethe, « Dataset: Vasserot “Quartiers” (Neighbourhoods) (1790-1860) - Licence ODbL 1.0 », Analyse Diachronique de l’espace Urbain Parisien: Approche Geomatique, 2015, [Online]. Available at: http://purl.stanford.edu/ry227xq8127. Data are in _data/init_datasets/Vasserot_district_.
+
+- 1860-1919: district data (named in _data/init_datasets_ "quartiers_paris_post_1860") was created in SoDUCo ANR Project and are open on Nakala platform [doi: 10.34847/nkl.a57506s3](https://doi.org/10.34847/nkl.a57506s3). See documentation in .pdf format on Nakala platform for precise information and licence to know how to use the data.
 
 ## Other informations
 

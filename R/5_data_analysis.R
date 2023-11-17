@@ -4,9 +4,6 @@ library(data.table)
 library(ineq)
 library(patchwork)
 library(latex2exp)
-library(osmdata) # extract Paris current limit
-library(MASS) # for kerdel density 2d
-library(reshape2) # For melt function
 source(file = "R/functions.R")
 
 #### data init ####
@@ -37,7 +34,7 @@ table_for_clock <- table_for_clock %>%
   ))
 
 ##### patchwork visual ####
-table_for_clock <- table_for_clock %>%
+table_for_clock_vis <- table_for_clock %>%
   mutate(NAICS = case_when(
     NAICS == 'Cosmetics, Beauty Supplies, and Perfume ' ~ 'Cosmetics, Beauty Supplies,\nand Perfume',
     NAICS == 'Clothing and clothing accessories ' ~ 'Clothing and clothing\naccessories',
@@ -48,7 +45,7 @@ table_for_clock <- table_for_clock %>%
     TRUE ~ NAICS
   ))
 
-a <- table_for_clock %>%
+a <- table_for_clock_vis %>%
   filter(type_of_change == 'a. minor change') %>%
   ggplot(aes(x = source.publication_date, y = rank, group = NAICS, color = NAICS)) +
   geom_line(linewidth=0.7) +
@@ -63,7 +60,7 @@ a <- table_for_clock %>%
   labs(subtitle = "(a)") +
   guides(color=guide_legend(ncol=2,byrow=TRUE))
 
-b <- table_for_clock %>%
+b <- table_for_clock_vis %>%
   filter(type_of_change == 'b. slight change') %>%
   ggplot(aes(x = source.publication_date, y = rank, group = NAICS, color = NAICS)) +
   geom_line(linewidth=0.7) +
@@ -78,7 +75,7 @@ b <- table_for_clock %>%
   labs(subtitle = "(b)") +
   guides(color=guide_legend(ncol=2,byrow=TRUE))
 
-c <- table_for_clock %>%
+c <- table_for_clock_vis %>%
   filter(type_of_change == 'c. major change') %>%
   ggplot(aes(x = source.publication_date, y = rank, group = NAICS, color = NAICS)) +
   geom_line(linewidth=0.7) +
@@ -146,7 +143,7 @@ table_choices_act <- table_for_clock %>%
   filter(NAICS %in% c('Food stores', 'Educational Services', 'Engineering Services', 
                       'Administrative and Legal Services', 'Health Practitioners', 
                       'Trade Agents and Brokers', 'Finance and Insurance',
-                      'No Activity, Living of Income', 'Public Administration', 'Manufacturing'))
+                      'Clothing and clothing accessories ', 'Public Administration', 'Manufacturing'))
 
 table_choices_act %>%
   ggplot(aes(x = source.publication_date, y = size, color=NAICS)) +
@@ -524,6 +521,9 @@ food_slope %>%
 ggsave(filename = "outputs/diff_slope_t_food_stores.png", width = 15, height = 13, units = 'cm', dpi = 300)
 
 #### Maps ####
+library(osmdata) # extract Paris current limit
+library(MASS) # for kerdel density 2d
+library(reshape2) # For melt function
 # download current boundary of Paris
 osmdataparis <- getbb(place_name = "Paris") %>% 
   opq() %>% 
@@ -531,7 +531,7 @@ osmdataparis <- getbb(place_name = "Paris") %>%
   osmdata_sf()
 
 osmdataparis <- osmdataparis$osm_multipolygons[1,] %>%
-  select(osm_id, name) %>%
+  dplyr::select(osm_id, name) %>%
   st_transform(crs = 2154)
 
 boundingboxparis <- st_bbox(obj = osmdataparis %>% # addin buffer to expand limits
@@ -566,12 +566,22 @@ kde_data <- kde_data %>%
   left_join(y = ndate_geoloc, by = "source.publication_date") %>%
   mutate(date_facet = paste0(source.publication_date, ', N=', n))
 
+
+#### visual with 3 different boundaries of Paris
+admin_before_1860 <- st_read(dsn = "data/init_datasets/Vasserot_district/Vasserots_quartiers_v.shp") %>%
+  st_union()
+
+admin_after_1860 <- st_read(dsn = "data/init_datasets/quartiers_paris_post_1860.shp") %>%
+  st_union()
+
 # viridis
 ggplot() +
   geom_sf(data = osmdataparis, linewidth = 0.2, fill='grey50')+
   geom_density_2d_filled(data = kde_data, 
                          mapping = aes(x=x, y=y), contour_var = "ndensity", alpha=0.8, bins = 20) +
   ggdark::dark_theme_linedraw() +
+  geom_sf(data = admin_after_1860, linewidth = 0.2, color='black', alpha=0)+
+  geom_sf(data = admin_before_1860, linewidth = 0.2, color='black', alpha=0)+
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank()) +
   facet_wrap(~ date_facet) +
   labs(title = 'Two-Dimensional Kernel density esimation', fill = 'ndensity level')
@@ -606,16 +616,85 @@ colnames(diff_2dates$z) <- diff_2dates$y
 diff_2datesmelt <- melt(diff_2dates$z, id.var=rownames(diff_2dates))
 names(diff_2datesmelt) <- c("x","y","z")
 
-# Plot difference 
+# Plot difference
 ggplot() +
   geom_tile(data = diff_2datesmelt, aes(x=x, y=y, z=z, fill=z)) +
   stat_contour(data = diff_2datesmelt, aes(x=x, y=y, z=z, colour=..level..), binwidth=0.001) +
   scale_fill_gradient2(low="red",mid="white", high="blue", midpoint=0) +
   scale_colour_gradient2(low=scales::muted("red"), mid="white", high=scales::muted("blue"), midpoint=0) +
   geom_sf(data = osmdataparis, linewidth = 0.2, color='grey50', alpha=0)+
+  geom_sf(data = admin_after_1860, linewidth = 0.2, color='grey50', alpha=0)+
+  geom_sf(data = admin_before_1860, linewidth = 0.2, color='grey50', alpha=0)+
   theme_bw() +
   theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank()) +
-  labs(title = 'Difference between KDE in 1829 and 1885', fill = 'KDE85-KDE29') +
+  labs(title = 'Difference between 1829 and 1885', fill = 'KDE85-KDE29') +
   guides(colour=FALSE)
 
 ggsave(filename = 'outputs/KDE_diff_1829_1885.png', width = 18, height = 15, units = 'cm', dpi = 300)
+
+######  same between 1850 and 1860 ###### 
+# Calculate the common x and y range for 2 dates datasets
+sf1829 <- kde_data %>% filter(source.publication_date == 1850)
+sf1885 <- kde_data %>% filter(source.publication_date == 1860)
+
+xrng <- range(c(sf1829$x, sf1885$x))
+yrng <- range(c(sf1829$y, sf1885$y))
+
+# Calculate the 2d density estimate over the common range
+d1829 <- kde2d(sf1829$x, sf1829$y, lims=c(xrng, yrng), n=200)
+d1885 <- kde2d(sf1885$x, sf1885$y, lims=c(xrng, yrng), n=200)
+
+# Confirm that the grid points for each density estimate are identical
+identical(d1829$x, d1885$x)
+identical(d1829$y, d1885$y)
+
+# Calculate the difference between the 2d density estimates
+diff_2dates <- d1829
+diff_2dates$z <- d1885$z - d1829$z
+
+## Melt data into long format
+rownames(diff_2dates$z) <- diff_2dates$x
+colnames(diff_2dates$z) <- diff_2dates$y
+
+# Now melt it to long format
+diff_2datesmelt <- melt(diff_2dates$z, id.var=rownames(diff_2dates))
+names(diff_2datesmelt) <- c("x","y","z")
+
+# Plot difference
+ggplot() +
+  geom_tile(data = diff_2datesmelt, aes(x=x, y=y, z=z, fill=z)) +
+  stat_contour(data = diff_2datesmelt, aes(x=x, y=y, z=z, colour=..level..), binwidth=0.001) +
+  scale_fill_gradient2(low="red",mid="white", high="blue", midpoint=0) +
+  scale_colour_gradient2(low=scales::muted("red"), mid="white", high=scales::muted("blue"), midpoint=0) +
+  geom_sf(data = osmdataparis, linewidth = 0.2, color='grey50', alpha=0)+
+  geom_sf(data = admin_after_1860, linewidth = 0.2, color='grey50', alpha=0)+
+  geom_sf(data = admin_before_1860, linewidth = 0.2, color='grey50', alpha=0)+
+  theme_bw() +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank()) +
+  labs(fill = 'KDE60-KDE50') +
+  guides(colour=FALSE)
+
+ggsave(filename = 'outputs/KDE_diff_1850_1860.png', width = 18, height = 15, units = 'cm', dpi = 300)
+
+
+##### Difference between initial data and geolocated data ####
+full_data_date <- table_for_clock %>%
+  group_by(source.publication_date) %>%
+  summarise(nall = sum(size))
+
+full_data_date_geoloc <- initial_data_sf %>%
+  st_drop_geometry() %>%
+  group_by(source.publication_date) %>%
+  count()
+
+tibble_geoloc <- full_data_date %>%
+  left_join(y = full_data_date_geoloc, by = 'source.publication_date') %>%
+  mutate(Frequency = n/nall)
+
+tibble_geoloc %>%
+  ggplot(aes(x=source.publication_date, y = Frequency)) +
+  geom_bar(stat = 'identity') +
+  theme_bw() +
+  theme(axis.title.x = element_blank())
+
+ggsave(filename = 'outputs/frequency_geolocated_entries.png', width = 14, height = 10, units = 'cm', dpi = 300)
