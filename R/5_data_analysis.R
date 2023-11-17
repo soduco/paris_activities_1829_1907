@@ -4,6 +4,9 @@ library(data.table)
 library(ineq)
 library(patchwork)
 library(latex2exp)
+library(osmdata) # extract Paris current limit
+library(MASS) # for kerdel density 2d
+library(reshape2) # For melt function
 source(file = "R/functions.R")
 
 #### data init ####
@@ -377,7 +380,7 @@ write.csv(x = naics_newdelim, file = 'outputs/slope_new_delim_paris.csv', row.na
 
 rm(naics_haussmann, naics_commune, naics_newdelim)
 
-#### log10 > food differentiation ####
+#### Food differentiation ####
 data_food <- initial_data %>%
   filter(!is.na(NAICS)) %>%
   filter(NAICS != '') %>%
@@ -520,52 +523,99 @@ food_slope %>%
 
 ggsave(filename = "outputs/diff_slope_t_food_stores.png", width = 15, height = 13, units = 'cm', dpi = 300)
 
-#### log10 > educational services ####
-# distinction between institutions and professors, i.e moral or physical person
-data_eduction <- initial_data_no_1829 %>%
-  filter(NAICS == "Educational Services") %>%
-  st_drop_geometry() %>%
-  # manual analysis with: initial_data_no_1829 %>% filter(NAICS == "Educational Services") %>% st_drop_geometry() %>% group_by(act_new, freq_max) %>% count() %>% view()
-  mutate(freq_max = if_else(
-    freq_max %in% c('estampes', 'institution','pensionnat') & act_new %ni% c('instituteu', 'institutr'), 'facility', 'individual'
-  )) %>%
-  group_by(source.book, source.publication_date, NAICS, date_join, freq_max) %>%
-  summarise(n = n()) %>%
-  ungroup() %>%
-  arrange(source.publication_date)
+#### Maps ####
+# download current boundary of Paris
+osmdataparis <- getbb(place_name = "Paris") %>% 
+  opq() %>% 
+  add_osm_feature(key = "admin_level", value = 8) %>% # https://wiki.openstreetmap.org/wiki/FR:Key:admin_level
+  osmdata_sf()
 
-data_eduction <- data_eduction %>%
-  left_join(y = pop_paris, by = c('date_join' = 'date'))
+osmdataparis <- osmdataparis$osm_multipolygons[1,] %>%
+  select(osm_id, name) %>%
+  st_transform(crs = 2154)
 
-data_eduction %>%
-  ggplot(mapping = aes(x = pop, y = n, group = freq_max)) +
-  ggpmisc::stat_poly_line(se = FALSE, show.legend = FALSE, color='grey30') +
-  ggpmisc::stat_poly_eq(aes(label = paste(after_stat(eq.label),
-                                          after_stat(rr.label), sep = "*\", \"*")),
-                        size = 2, label.x = "right", show.legend = FALSE) +
-  geom_point(show.legend = FALSE) +
-  scale_x_continuous(name = 'Population', trans = 'log10', limits = c(750000,3000000), minor_breaks = seq(500000, 3000000, 100000)) +
-  scale_y_continuous(name = TeX(r"($N_a$ educational services)"), trans = 'log10', 
-                     limits = c(100,1600), minor_breaks = seq(100, 2000, 100)) +
-  theme_bw() +
-  facet_wrap(~freq_max)
+boundingboxparis <- st_bbox(obj = osmdataparis %>% # addin buffer to expand limits
+                              st_buffer(dist = 1000)) %>% 
+  st_as_sfc() %>% 
+  st_as_sf()
 
-ggsave(filename = "outputs/educational_services.png",  width = 16, height = 12, units = 'cm', dpi = 300)
-
-#### some maps vizualization ####
-departement_paris <- st_read(dsn = "data/init_datasets/BDC_5-0_GPKG_LAMB93_D075-ED2022-09-15.gpkg", layer = 'departement') %>%
-  filter(nom_officiel == 'Paris')
-
+# filter data with geometry inside bounding box of paris
 initial_data_sf <- initial_data %>%
   mutate(geomempty = st_is_empty(.)) %>%
-  filter(geomempty == FALSE)
+  filter(geomempty == FALSE) %>%
+  st_filter(x = ., y = boundingboxparis, .predicate = st_within)
 
-st_with
+# local: if too large
+# rm(initial_data)
 
-initial_data %>% 
-  filter(NAICS == 'Wholesalers Trade') %>% 
-  filter(source.publication_date==1855) %>% 
-  mutate(blob=st_is_empty(.)) %>% 
-  filter(blob == FALSE)
+###### KDE visualization of spatialized data ######
+kde_data <- initial_data_sf %>%
+  st_cast(to = 'POINT') # if multipoint
 
+# sf data to x;y data with informations
+kde_data <- do.call(rbind, st_geometry(kde_data)) %>% 
+  as_tibble() %>%
+  setNames(c("x","y")) %>%
+  bind_cols(kde_data %>% st_drop_geometry())
 
+ndate_geoloc <- kde_data %>%
+  group_by(source.publication_date) %>%
+  count()
+
+kde_data <- kde_data %>%
+  left_join(y = ndate_geoloc, by = "source.publication_date") %>%
+  mutate(date_facet = paste0(source.publication_date, ', N=', n))
+
+# viridis
+ggplot() +
+  geom_sf(data = osmdataparis, linewidth = 0.2, fill='grey50')+
+  geom_density_2d_filled(data = kde_data, 
+                         mapping = aes(x=x, y=y), contour_var = "ndensity", alpha=0.8, bins = 20) +
+  ggdark::dark_theme_linedraw() +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank()) +
+  facet_wrap(~ date_facet) +
+  labs(title = 'Two-Dimensional Kernel density esimation', fill = 'ndensity level')
+
+ggsave(filename = 'outputs/KDE_spatialized_data.png', width = 30, height = 26, units = 'cm', dpi = 300)
+
+######  Calculate and plot difference between 1829 and 1885 ###### 
+# Calculate the common x and y range for 2 dates datasets
+sf1829 <- kde_data %>% filter(source.publication_date == 1829)
+sf1885 <- kde_data %>% filter(source.publication_date == 1885)
+  
+xrng <- range(c(sf1829$x, sf1885$x))
+yrng <- range(c(sf1829$y, sf1885$y))
+
+# Calculate the 2d density estimate over the common range
+d1829 <- kde2d(sf1829$x, sf1829$y, lims=c(xrng, yrng), n=200)
+d1885 <- kde2d(sf1885$x, sf1885$y, lims=c(xrng, yrng), n=200)
+
+# Confirm that the grid points for each density estimate are identical
+identical(d1829$x, d1885$x)
+identical(d1829$y, d1885$y)
+
+# Calculate the difference between the 2d density estimates
+diff_2dates <- d1829
+diff_2dates$z <- d1885$z - d1829$z
+
+## Melt data into long format
+rownames(diff_2dates$z) <- diff_2dates$x
+colnames(diff_2dates$z) <- diff_2dates$y
+
+# Now melt it to long format
+diff_2datesmelt <- melt(diff_2dates$z, id.var=rownames(diff_2dates))
+names(diff_2datesmelt) <- c("x","y","z")
+
+# Plot difference 
+ggplot() +
+  geom_tile(data = diff_2datesmelt, aes(x=x, y=y, z=z, fill=z)) +
+  stat_contour(data = diff_2datesmelt, aes(x=x, y=y, z=z, colour=..level..), binwidth=0.001) +
+  scale_fill_gradient2(low="red",mid="white", high="blue", midpoint=0) +
+  scale_colour_gradient2(low=scales::muted("red"), mid="white", high=scales::muted("blue"), midpoint=0) +
+  geom_sf(data = osmdataparis, linewidth = 0.2, color='grey50', alpha=0)+
+  theme_bw() +
+  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank()) +
+  labs(title = 'Difference between KDE in 1829 and 1885', fill = 'KDE85-KDE29') +
+  guides(colour=FALSE)
+
+ggsave(filename = 'outputs/KDE_diff_1829_1885.png', width = 18, height = 15, units = 'cm', dpi = 300)
