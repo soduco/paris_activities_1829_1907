@@ -617,7 +617,7 @@ diff_2datesmelt <- melt(diff_2dates$z, id.var=rownames(diff_2dates))
 names(diff_2datesmelt) <- c("x","y","z")
 
 # Plot difference
-a <- ggplot() +
+ggplot() +
   geom_tile(data = diff_2datesmelt, aes(x=x, y=y, z=z, fill=z)) +
   stat_contour(data = diff_2datesmelt, aes(x=x, y=y, z=z, colour=..level..), binwidth=0.001) +
   scale_fill_gradient2(low="red",mid="white", high="blue", midpoint=0) +
@@ -631,53 +631,7 @@ a <- ggplot() +
         legend.title = element_text(size = 8), legend.text = element_text(size=7)) +
   guides(colour=FALSE)
 
-###### Same between 1850 and 1860 ###### 
-# Calculate the common x and y range for 2 dates datasets
-sf1850 <- kde_data %>% filter(source.publication_date == 1850)
-sf1860 <- kde_data %>% filter(source.publication_date == 1860)
-
-xrng <- range(c(sf1850$x, sf1860$x))
-yrng <- range(c(sf1850$y, sf1860$y))
-
-# Calculate the 2d density estimate over the common range
-d1850 <- kde2d(sf1850$x, sf1850$y, lims=c(xrng, yrng), n=200)
-d1860 <- kde2d(sf1860$x, sf1860$y, lims=c(xrng, yrng), n=200)
-
-# Confirm that the grid points for each density estimate are identical
-identical(d1850$x, d1860$x)
-identical(d1850$y, d1860$y)
-
-# Calculate the difference between the 2d density estimates
-diff_2dates2 <- d1850
-diff_2dates2$z <- d1860$z - d1850$z
-
-## Melt data into long format
-rownames(diff_2dates2$z) <- diff_2dates2$x
-colnames(diff_2dates2$z) <- diff_2dates2$y
-
-# Now melt it to long format
-diff_2datesmelt2 <- melt(diff_2dates2$z, id.var=rownames(diff_2dates2))
-names(diff_2datesmelt2) <- c("x","y","z")
-
-# Plot difference
-b <- ggplot() +
-  geom_tile(data = diff_2datesmelt2, aes(x=x, y=y, z=z, fill=z)) +
-  stat_contour(data = diff_2datesmelt2, aes(x=x, y=y, z=z, colour=..level..), binwidth=0.001) +
-  scale_fill_gradient2(low="red",mid="white", high="blue", midpoint=0) +
-  scale_colour_gradient2(low=scales::muted("red"), mid="white", high=scales::muted("blue"), midpoint=0) +
-  geom_sf(data = osmdataparis, linewidth = 0.2, color='grey50', alpha=0)+
-  geom_sf(data = admin_after_1860, linewidth = 0.2, color='grey50', alpha=0)+
-  geom_sf(data = admin_before_1860, linewidth = 0.2, color='grey50', alpha=0)+
-  theme_bw() +
-  labs(fill = TeX(r"($KDE_{t+1}-KDE_t$)"), subtitle = '1850-1860') +
-  theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank(),
-        legend.title = element_text(size = 8), legend.text = element_text(size=7)) +
-  guides(colour=FALSE)
-
-a/b
-
-ggsave(filename = 'outputs/KDE_differences.png', width = 18, height = 20, units = 'cm', dpi = 300)
-
+ggsave(filename = 'outputs/KDE_differences.png', width = 18, height = 10, units = 'cm', dpi = 300)
 
 ##### Difference between initial data and geolocated data ####
 full_data_date <- table_for_clock %>%
